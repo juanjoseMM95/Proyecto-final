@@ -9,8 +9,8 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     //id 'application'
     id 'java'
-    id 'org.springframework.boot' version '3.5.3'
-    id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.springframework.boot' version '3.2.7'
+    id 'io.spring.dependency-management' version '1.1.4'
     id 'war'
 }
 
@@ -46,6 +46,15 @@ dependencies {
     //mapstruct
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    // ✅ AGREGADO: Dependencias para comunicación con microservicios
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.0'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer:4.1.0'
+
+    // Dependencias existentes...
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
