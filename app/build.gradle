@@ -12,6 +12,7 @@ plugins {
     id 'org.springframework.boot' version '3.5.3'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'war'
+    id 'application'
 }
 
 repositories {
@@ -54,12 +55,13 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-/*
+
 application {
     // Define the main class for the application.
     mainClass = 'com.arka.arkajjmunozm.ArkaApp'
 }
 
+/*
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
