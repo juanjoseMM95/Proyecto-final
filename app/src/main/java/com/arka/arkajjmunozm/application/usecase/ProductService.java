@@ -25,8 +25,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product getProduct(long id) {
-        return productRepository.findById((int)id)
+    public Product getProduct(int id) {
+        return productRepository.findById(id)
                 .map(this::mapToDomain)
                 .orElse(null);
     }
