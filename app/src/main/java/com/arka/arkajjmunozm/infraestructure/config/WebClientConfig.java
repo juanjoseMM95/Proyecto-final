@@ -11,6 +11,9 @@ public class WebClientConfig {
     @Value("${microservices.cotizador.url}")
     private String cotizadorBaseUrl;
 
+    @Value("${microservices.inventario.url}")
+    private String inventarioBaseUrl;
+
     @Bean
     public WebClient cotizadorWebClient() {
         return WebClient.builder()
@@ -18,4 +21,13 @@ public class WebClientConfig {
                 .defaultHeader("Content-Type", "application/json")
                 .build();
     }
+
+    @Bean
+    public WebClient inventarioWebClient() {
+        return WebClient.builder()
+                .baseUrl(inventarioBaseUrl)
+                .defaultHeader("Content-Type", "application/json")
+                .build();
+    }
+
 }

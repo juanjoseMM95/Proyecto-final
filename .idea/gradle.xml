@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/arca-cotizador" />
+            <option value="$PROJECT_DIR$/arca-inventario" />
           </set>
         </option>
       </GradleProjectSettings>

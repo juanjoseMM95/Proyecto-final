@@ -5,6 +5,7 @@ import com.arka.arkajjmunozm.domain.port.out.dto.CotizacionRequest;
 import com.arka.arkajjmunozm.domain.port.out.dto.CotizacionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -15,6 +16,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class CotizadorServiceAdapter implements ICotizadorServicePort
 {
+    @Qualifier("cotizadorWebClient")
     private final WebClient cotizadorWebClient;
 
     @Override

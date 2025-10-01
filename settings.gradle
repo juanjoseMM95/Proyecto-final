@@ -13,3 +13,4 @@ plugins {
 rootProject.name = 'Arkajjmunozm'
 include('app')
 include('arca-cotizador')
+include('arca-inventario')

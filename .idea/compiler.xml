@@ -16,9 +16,13 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.38/57f8f5e02e92a30fd21b80cbd426a4172b5f8e29/lombok-1.18.38.jar" />
         </processorPath>
         <module name="Arkajjmunozm.arca-cotizador.main" />
+        <module name="Arkajjmunozm.arca-inventario.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="21" />
+    <bytecodeTargetLevel target="21">
+      <module name="Arkajjmunozm.arka-inventario.main" target="24" />
+      <module name="Arkajjmunozm.arka-inventario.test" target="24" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -28,6 +32,9 @@
       <module name="Arkajjmunozm.arca-cotizador" options="-parameters" />
       <module name="Arkajjmunozm.arca-cotizador.main" options="-parameters" />
       <module name="Arkajjmunozm.arca-cotizador.test" options="-parameters" />
+      <module name="Arkajjmunozm.arca-inventario" options="-parameters" />
+      <module name="Arkajjmunozm.arca-inventario.main" options="-parameters" />
+      <module name="Arkajjmunozm.arca-inventario.test" options="-parameters" />
     </option>
   </component>
 </project>
