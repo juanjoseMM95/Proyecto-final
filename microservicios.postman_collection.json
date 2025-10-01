@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "42f581bc-f8f7-4fe6-863b-044d6081ce24",
+		"name": "microservicios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11466992",
+		"_collection_link": "https://cloudy-space-967683.postman.co/workspace/MyOwn~1d5a5c11-629f-4aa5-910e-315c3fc0d3bb/collection/11466992-42f581bc-f8f7-4fe6-863b-044d6081ce24?action=share&source=collection_link&creator=11466992"
+	},
+	"item": [
+		{
+			"name": "crear cotizacion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerId\": 5,\r\n  \"productos\": [\r\n    {\r\n      \"productId\": 22,\r\n      \"cantidad\": 2\r\n    },\r\n    {\r\n      \"productId\": 23,\r\n      \"cantidad\": 1\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/cotizaciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cotizaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "health micro cotizacion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/cotizaciones/check-cotizador",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cotizaciones",
+						"check-cotizador"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inventario producto",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerId\": 5,\r\n  \"productos\": [\r\n    {\r\n      \"productId\": 22,\r\n      \"cantidad\": 2\r\n    },\r\n    {\r\n      \"productId\": 23,\r\n      \"cantidad\": 1\r\n    }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/inventario/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"inventario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
