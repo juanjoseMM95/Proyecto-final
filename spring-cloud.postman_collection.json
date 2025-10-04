@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "3d52df57-42fe-430b-8287-be5be0592a64",
+		"name": "spring-cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11466992",
+		"_collection_link": "https://cloudy-space-967683.postman.co/workspace/MyOwn~1d5a5c11-629f-4aa5-910e-315c3fc0d3bb/collection/11466992-3d52df57-42fe-430b-8287-be5be0592a64?action=share&source=collection_link&creator=11466992"
+	},
+	"item": [
+		{
+			"name": "health-api-gateway",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "hello",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "hello - info",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "health-hello",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "health-cotizador",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "health-inventario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/inventario/api/inventario/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"inventario",
+						"api",
+						"inventario",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
