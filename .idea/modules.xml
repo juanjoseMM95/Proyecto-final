@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Arkajjmunozm.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Arkajjmunozm.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/arca-cotizador/Arkajjmunozm.arca-cotizador.main.iml" filepath="$PROJECT_DIR$/.idea/modules/arca-cotizador/Arkajjmunozm.arca-cotizador.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/arca-inventario/Arkajjmunozm.arca-inventario.main.iml" filepath="$PROJECT_DIR$/.idea/modules/arca-inventario/Arkajjmunozm.arca-inventario.main.iml" />
     </modules>
   </component>
 </project>

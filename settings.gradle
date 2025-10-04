@@ -14,3 +14,6 @@ rootProject.name = 'Arkajjmunozm'
 include('app')
 include('arca-cotizador')
 include('arca-inventario')
+include('eureka-server')
+include('api-gateway')
+include('hello-world-service')
