@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/arca-cotizador" />
             <option value="$PROJECT_DIR$/arca-inventario" />
+            <option value="$PROJECT_DIR$/arka-security-common" />
             <option value="$PROJECT_DIR$/eureka-server" />
             <option value="$PROJECT_DIR$/hello-world-service" />
           </set>

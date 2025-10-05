@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
@@ -21,6 +21,7 @@ public class InventarioController {
     private final InventarioService solicitarInventarioService;
 
     @GetMapping("/{productoId}")
+    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GESTOR', 'OPERADOR', 'USUARIO')")
     public CompletableFuture<ResponseEntity<InventarioResult>>
     solicitarInventario(@PathVariable("productoId") int productoId) {
 

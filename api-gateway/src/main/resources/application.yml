@@ -17,13 +17,21 @@ spring:
             - Path=/api/cotizador/**
           filters:
             - StripPrefix=2
+            - name: AddRequestHeader
+              args:
+                name: X-Required-Roles
+                value: ADMINISTRADOR,GESTOR,OPERADOR,USUARIO
             
-        - id: cotizador-inventario
+        - id: inventario-service
           uri: lb://arca-inventario
           predicates:
             - Path=/api/inventario/**
           filters:
             - StripPrefix=2
+            - name: AddRequestHeader
+              args:
+                name: X-Required-Roles
+                value: ADMINISTRADOR,GESTOR,OPERADOR,USUARIO
             
         - id: hello-world-service
           uri: lb://hello-world-service
@@ -38,6 +46,48 @@ spring:
           predicates:
             - Path=/eureka/**
 
+        - id: auth-service
+          uri: lb://arca-inventario
+          predicates:
+            - Path=/auth/**
+          filters:
+            - name: AddRequestHeader
+              args:
+                name: X-Request-Type
+                value: AUTH
+
+            # Rutas de administración - solo administradores
+        - id: admin-service
+          uri: lb://arca-inventario
+          predicates:
+            - Path=/api/admin/**
+          filters:
+            - name: AddRequestHeader
+              args:
+                name: X-Required-Role
+                value: ADMINISTRADOR
+
+            # Rutas de operaciones - administradores, gestores y operadores
+        - id: operaciones-service
+          uri: lb://arca-inventario
+          predicates:
+            - Path=/api/operaciones/**
+          filters:
+            - name: AddRequestHeader
+              args:
+                name: X-Required-Roles
+                value: ADMINISTRADOR,GESTOR,OPERADOR
+
+            # Rutas de cálculos - todos los roles autenticados
+        - id: calculos-service
+          uri: lb://arca-inventario
+          predicates:
+            - Path=/api/calculos/**
+          filters:
+            - name: AddRequestHeader
+              args:
+                name: X-Required-Roles
+                value: ADMINISTRADOR,GESTOR,OPERADOR,USUARIO
 eureka:
   client:
     service-url:

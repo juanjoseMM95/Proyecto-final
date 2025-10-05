@@ -38,6 +38,9 @@
       <module name="Arkajjmunozm.arca-inventario" options="-parameters" />
       <module name="Arkajjmunozm.arca-inventario.main" options="-parameters" />
       <module name="Arkajjmunozm.arca-inventario.test" options="-parameters" />
+      <module name="Arkajjmunozm.arka-security-common" options="-parameters" />
+      <module name="Arkajjmunozm.arka-security-common.main" options="-parameters" />
+      <module name="Arkajjmunozm.arka-security-common.test" options="-parameters" />
       <module name="Arkajjmunozm.eureka-server" options="-parameters" />
       <module name="Arkajjmunozm.eureka-server.main" options="-parameters" />
       <module name="Arkajjmunozm.eureka-server.test" options="-parameters" />
