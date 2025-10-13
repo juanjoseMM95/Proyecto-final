@@ -15,13 +15,13 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/inventario")
+@RequestMapping("/calcular")
 @RequiredArgsConstructor
 public class InventarioController {
     private final InventarioService solicitarInventarioService;
 
     @GetMapping("/{productoId}")
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GESTOR', 'OPERADOR', 'USUARIO')")
+    //@PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GESTOR', 'OPERADOR', 'USUARIO','CALC_READ','QUOTE_READ')")
     public CompletableFuture<ResponseEntity<InventarioResult>>
     solicitarInventario(@PathVariable("productoId") int productoId) {
 

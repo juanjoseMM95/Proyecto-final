@@ -24,35 +24,39 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+//        return http
+//                .csrf(csrf -> csrf.disable())
+//                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//                .authorizeExchange(exchanges -> exchanges
+//                        // Endpoints de autenticación - públicos
+////                        .pathMatchers("/auth/register", "/auth/login", "/auth/refresh","/auth/validate").permitAll()
+//                        .pathMatchers("/auth/**").permitAll()
+//
+//                        // Endpoints de salud - públicos
+//                        .pathMatchers("/actuator/health", "/actuator/info").permitAll()
+//
+//                        // Endpoints de administración - solo ADMINISTRADOR
+//                        .pathMatchers("/api/admin/**").hasRole("ADMINISTRADOR")
+//
+//                        // Endpoints de gestión - ADMINISTRADOR y GESTOR
+//                        //.pathMatchers("/api/inventario/**").hasAnyRole("ADMINISTRADOR", "GESTOR")
+//                                .pathMatchers("/api/inventario/**").permitAll()
+//
+//                        // Todos los demás endpoints requieren autenticación
+//                        .anyExchange().authenticated()
+//                )
+//                // Deshabilitar autenticación automática ya que usamos headers del Gateway
+//                .httpBasic(httpBasic -> httpBasic.disable())
+//                .formLogin(formLogin -> formLogin.disable())
+//                .build();
         return http
-                .csrf(csrf -> csrf.disable())
+                    .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(exchanges -> exchanges
-                        // Endpoints de autenticación - públicos
-//                        .pathMatchers("/auth/register", "/auth/login", "/auth/refresh","/auth/validate").permitAll()
-                        .pathMatchers("/auth/**").permitAll()
-
-                        // Endpoints de salud - públicos
-                        .pathMatchers("/actuator/health", "/actuator/info").permitAll()
-
-                        // Endpoints de administración - solo ADMINISTRADOR
-                        .pathMatchers("/api/admin/**").hasRole("ADMINISTRADOR")
-
-                        // Endpoints de gestión - ADMINISTRADOR y GESTOR
-                        .pathMatchers("/api/inventario/**").hasAnyRole("ADMINISTRADOR", "GESTOR")
-
-                        // Endpoints de operaciones - ADMINISTRADOR, GESTOR y OPERADOR
-                        .pathMatchers("/api/operaciones/**").hasAnyRole("ADMINISTRADOR", "GESTOR", "OPERADOR")
-
-                        // Endpoints de cálculos - todos los roles autenticados
-                        .pathMatchers("/api/calculos/**").hasAnyRole("ADMINISTRADOR", "GESTOR", "OPERADOR", "USUARIO")
-
-                        // Todos los demás endpoints requieren autenticación
-                        .anyExchange().authenticated()
+                        .anyExchange().permitAll()
                 )
-                // Deshabilitar autenticación automática ya que usamos headers del Gateway
-                .httpBasic(httpBasic -> httpBasic.disable())
-                .formLogin(formLogin -> formLogin.disable())
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+                .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .build();
     }
 
@@ -75,3 +79,25 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder(12); // Strength 12 para mayor seguridad
     }
 }
+//package com.arka.inventario.infraestructure.config;
+//
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+//import org.springframework.security.config.web.server.ServerHttpSecurity;
+//import org.springframework.security.web.server.SecurityWebFilterChain;
+//
+//@Configuration
+//@EnableWebFluxSecurity
+//public class SecurityConfig {
+//
+//    @Bean
+//    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+//        return http
+//                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+//                .authorizeExchange(exchanges -> exchanges
+//                        .anyExchange().permitAll() // Permitir todo ya que el Gateway valida
+//                )
+//                .build();
+//    }
+//}

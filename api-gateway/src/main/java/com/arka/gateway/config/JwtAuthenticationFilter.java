@@ -1,3 +1,4 @@
+
 package com.arka.gateway.config;
 
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -9,15 +10,20 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import javax.crypto.SecretKey;
 import java.util.List;
 
 /**
  * Filtro global de autenticación JWT para el API Gateway
- * VERSIÓN SIMPLIFICADA - Sin dependencias externas
- * TODO: Integrar con servicio JWT cuando esté disponible
  */
-@Component //Desactivado temporalmente
+@Component
 public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
+
+    private static final String SECRET_KEY = "ArkaSecretKeyForJWTTokenGenerationAndValidation2024!";
 
     // Rutas que no requieren autenticación
     private static final List<String> OPEN_API_ENDPOINTS = List.of(
@@ -26,36 +32,96 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
             "/auth/refresh",
             "/actuator/health",
             "/actuator/info",
-            "/eureka",
-            "/cotizador", // Temporalmente abierto para testing
-            "/inventario"     // Temporalmente abierto para testing
+            "/eureka"
     );
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+        String path = request.getPath().value();
+        System.out.println("=== GATEWAY FILTER DEBUG ===");
+        System.out.println("Path: " + path);
+        System.out.println("Method: " + request.getMethod());
 
-        // Por ahora, permitir todas las rutas
-        // TODO: Implementar validación JWT cuando el servicio esté disponible
+        System.out.println("API Gateway - Request: " + request.getMethod() + " " + path);
 
-        // Log de la request (para debugging)
-        System.out.println("API Gateway - Request: " + request.getMethod() + " " + request.getPath().value());
+        // Permitir endpoints abiertos
+        if (isOpenEndpoint(path)) {
+            System.out.println("Open endpoint - skipping validation");
+            return chain.filter(exchange);
+        }
 
-        // Continuar con la cadena de filtros sin validación
-        return chain.filter(exchange);
+        // Extraer token del header Authorization
+        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        System.out.println("Auth Header: " + (authHeader != null ? "Bearer ***" : "NULL"));
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("Missing or invalid Authorization header");
+            return onError(exchange, "Token de acceso requerido", HttpStatus.UNAUTHORIZED);
+        }
+
+        String token = authHeader.substring(7);
+
+        try {
+            // Validar token
+            Claims claims = validateToken(token);
+            System.out.println("Token valid for user: " + claims.getSubject());
+            System.out.println("User permissions: " + claims.get("permissions"));
+
+            // Verificar permisos según la ruta
+            if (!hasRequiredPermission(path, claims)) {
+                System.out.println("Insufficient permissions for path: " + path);
+                return onError(exchange, "Permisos insuficientes", HttpStatus.FORBIDDEN);
+            }
+            System.out.println("Permission check passed - forwarding to microservice");
+            // Propagar información del usuario a los microservicios
+            ServerHttpRequest modifiedRequest = request.mutate()
+                    .headers(headers -> {
+                        headers.set("X-User-Id", claims.get("userId").toString());
+                        headers.set("X-User-Username", claims.getSubject());
+                        headers.set("X-User-Role", claims.get("role").toString());
+                    })
+                    .build();
+
+            return chain.filter(exchange.mutate().request(modifiedRequest).build());
+
+        } catch (Exception e) {
+            return onError(exchange, "Token inválido: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
     }
 
-    /**
-     * Verifica si un endpoint está en la lista de endpoints abiertos
-     */
+    private Claims validateToken(String token) {
+        SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    private boolean hasRequiredPermission(String path, Claims claims) {
+        @SuppressWarnings("unchecked")
+        List<String> permissions = (List<String>) claims.get("permissions");
+
+        if (permissions == null) return false;
+
+        // Definir permisos requeridos por ruta
+        if (path.contains("/api/inventario")) {
+            return permissions.contains("CALC_READ");
+        }
+
+        if (path.contains("/api/cotizador")) {
+            return permissions.contains("QUOTE_READ");
+        }
+
+        return true; // Por defecto permitir si no hay regla específica
+    }
+
     private boolean isOpenEndpoint(String path) {
         return OPEN_API_ENDPOINTS.stream()
                 .anyMatch(openPath -> path.contains(openPath));
     }
 
-    /**
-     * Maneja errores de autenticación
-     */
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         exchange.getResponse().setStatusCode(httpStatus);
         exchange.getResponse().getHeaders().add("Content-Type", "application/json");
@@ -74,6 +140,6 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return -1; // Ejecutar antes que otros filtros
+        return -1;
     }
 }
