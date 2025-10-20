@@ -66,6 +66,11 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }*/
+bootWar {
+    enabled = true
+    mainClass = 'com.arka.arkajjmunozm.ArkaApp'
+}
+
 
 configurations {
     compileOnly {
